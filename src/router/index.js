@@ -8,6 +8,8 @@ import Headcount from "@/views/HeadcountView.vue";
 import Configuraciones from "@/views/ConfiguracionesView.vue";
 import Login from "@/views/Login.vue";
 import EmpleadoProfileView from "@/views/EmpleadoProfileView.vue";
+import UsuariosView from '@/views/UsuariosView.vue';
+import changepassword from '@/views/ChangePassword.vue';
 
 const routes = [
   {
@@ -16,6 +18,7 @@ const routes = [
     component: HomeView,
     meta: { requiresAuth: true }
   },
+
   {
     path: "/canales",
     name: "Canales de comunicaciones",
@@ -28,6 +31,12 @@ const routes = [
     component: AusentismoView,
     meta: { requiresAuth: true }
   },
+    {
+    path: "/changepassword",
+    name: "changepassword",
+    component: changepassword,
+    meta: { requiresAuth: true }
+  },
   {
     path: "/headcount",
     name: "Headcount",
@@ -38,6 +47,12 @@ const routes = [
     path: "/empleados/:id",
     component: EmpleadoProfileView,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/configuraciones/usuarios",
+    name: "usuarios",
+    component: UsuariosView,
+    meta: { requiresAuth: true }
   },
   // {
   //   path: "/extras",

@@ -85,8 +85,16 @@ export default {
 
         localStorage.setItem("token", res.data.access_token);
         localStorage.setItem("username", res.data.UserLogin);
+        localStorage.setItem(
+          "forcePasswordChange",
+          res.data.forcePasswordChange
+        );
 
-        this.$router.push("/");
+        if (res.data.forcePasswordChange === 1 || res.data.forcePasswordChange === true) {
+          this.$router.push("/changepassword");
+        } else {
+          this.$router.push("/");
+        }
       } catch (err) {
         this.error = "Usuario o contraseña incorrectos";
       }
