@@ -9,75 +9,22 @@ import Configuraciones from "@/views/ConfiguracionesView.vue";
 import Login from "@/views/Login.vue";
 import EmpleadoProfileView from "@/views/EmpleadoProfileView.vue";
 import UsuariosView from '@/views/UsuariosView.vue';
+import UsuariosPerfil from '@/views/UsuariosPerfil.vue';
 import changepassword from '@/views/ChangePassword.vue';
 
 const routes = [
-  {
-    path: "/",
-    name: "home",
-    component: HomeView,
-    meta: { requiresAuth: true }
-  },
-
-  {
-    path: "/canales",
-    name: "Canales de comunicaciones",
-    component: CanalesComunicacion,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/ausentismo",
-    name: "Ausentismo",
-    component: AusentismoView,
-    meta: { requiresAuth: true }
-  },
-    {
-    path: "/changepassword",
-    name: "changepassword",
-    component: changepassword,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/headcount",
-    name: "Headcount",
-    component: Headcount,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/empleados/:id",
-    component: EmpleadoProfileView,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/configuraciones/usuarios",
-    name: "usuarios",
-    component: UsuariosView,
-    meta: { requiresAuth: true }
-  },
-  // {
-  //   path: "/extras",
-  //   name: "Horas Extras",
-  //   component: HorasExtras,
-  //   meta: { requiresAuth: true }
-  // },
-  // {
-  //   path: "/terminaciones",
-  //   name: "Terminaciones",
-  //   component: Terminaciones,
-  //   meta: { requiresAuth: true }
-  // },
-  {
-    path: "/configuraciones",
-    name: "Configuraciones",
-    component: Configuraciones,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/login",
-    name: "login",
-    component: Login,
-    meta: { public: true }
-  },
+  { path: "/", name: "home", component: HomeView, meta: { requiresAuth: true } },
+  { path: "/canales", name: "Canales de comunicaciones", component: CanalesComunicacion, meta: { requiresAuth: true, permiso: "canales:read" } },
+  { path: "/ausentismo", name: "Ausentismo", component: AusentismoView, meta: { requiresAuth: true, permiso: "ausentismo:read" } },
+  { path: "/changepassword", name: "changepassword", component: changepassword, meta: { requiresAuth: true } },
+  { path: "/headcount", name: "Headcount", component: Headcount, meta: { requiresAuth: true, permiso: "empleados:read"} },
+  { path: "/empleados/:id", component: EmpleadoProfileView, meta: { requiresAuth: true, permiso: "empleados:read" } },
+  { path: "/configuraciones/usuarios", name: "usuarios", component: UsuariosView, meta: { requiresAuth: true, permiso: "usuarios:read" } },
+  { path: "/configuraciones/usuarios/:id", name: "usuariosPerfil", component: UsuariosPerfil, meta: { requiresAuth: true, permiso: "usuarios:read" } },
+  { path: "/configuraciones", name: "Configuraciones", component: Configuraciones, meta: { requiresAuth: true, permiso: "usuarios:read" } },
+  // { path: "/extras", name: "Horas Extras", component: HorasExtras, meta: { requiresAuth: true, permiso: "extras:read" } },
+  // { path: "/terminaciones", name: "Terminaciones", component: Terminaciones, meta: { requiresAuth: true, permiso: "terminaciones:read" } },
+  { path: "/login", name: "login", component: Login, meta: { public: true } },
 ];
 
 const router = createRouter({
@@ -85,18 +32,23 @@ const router = createRouter({
   routes,
 });
 
+
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
+  const userPermisos = (localStorage.getItem("permisosUsuario") || "").split(",");
 
   if (to.meta.requiresAuth && !token) {
-    next({ name: "login" });
+    return next({ name: "login" });
   }
-  else if (to.name === "login" && token) {
-    next({ name: "home" });
+
+  if (to.name === "login" && token) {
+    return next({ name: "home" });
   }
-  else {
-    next();
+
+  if (to.meta.permiso && !userPermisos.includes(to.meta.permiso)) {
+    return next({ name: "home" });
   }
+  next();
 });
 
 export default router;

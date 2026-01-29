@@ -10,64 +10,7 @@
         <RouterLink class="sidebar-brand" to="/">
           <span class="align-middle">HHRR</span>
         </RouterLink>
-
-        <ul class="sidebar-nav">
-          <li class="sidebar-header">Pages</li>
-
-          <li class="sidebar-item">
-            <RouterLink class="sidebar-link" to="/">
-              <i data-feather="sliders"></i>
-              <span>Dashboard</span>
-            </RouterLink>
-          </li>
-
-          
-          <li class="sidebar-item">
-            <RouterLink class="sidebar-link" to="/canales">
-              <i data-feather="user"></i>
-              <span>Canales de comunicación</span>
-            </RouterLink>
-          </li>
-          
-          <li class="sidebar-item">
-            <RouterLink class="sidebar-link" to="/ausentismo">
-              <i data-feather="user"></i>
-              <span>Ausentismo</span>
-            </RouterLink>
-          </li>
-       
-          <li class="sidebar-item">
-            <RouterLink class="sidebar-link" to="/headcount">
-              <i data-feather="user"></i>
-              <span>Headcount</span>
-            </RouterLink>
-          </li>
-          <li class="sidebar-item">
-            <RouterLink class="sidebar-link" to="/configuraciones">
-              <i data-feather="user"></i>
-              <span>Configuraciones</span>
-            </RouterLink>
-          </li>
-             <!-- 
-          <li class="sidebar-item">
-            <RouterLink class="sidebar-link" to="/extras">
-              <i data-feather="user"></i>
-              <span>Horas Extras</span>
-            </RouterLink>
-          </li>
-          <li class="sidebar-item">
-            <RouterLink class="sidebar-link" to="/terminaciones">
-              <i data-feather="user"></i>
-              <span>Terminaciones</span>
-            </RouterLink>
-          </li>
-          <li class="sidebar-item">
-            <RouterLink class="sidebar-link" to="/configuraciones">
-              <i data-feather="user"></i>
-              <span>Configuraciones</span>
-            </RouterLink>
-          </li> -->
-        </ul>
+        <AppSidebar />
       </div>
     </nav>
 
@@ -129,6 +72,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
+import AppSidebar from "@/components/AppSidebar.vue";
 
 const router = useRouter();
 

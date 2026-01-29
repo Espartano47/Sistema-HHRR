@@ -1,13 +1,16 @@
 <template>
   <MainLayout>
     <div class="container-fluid p-0">
-      <h1 class="h3 mb-3">Headcount</h1>
+      <!-- <h1 class="h3 mb-3">Headcount</h1> -->
 
       <div class="card">
         <!-- HEADER -->
         <div class="card-header">
+          <h5 class="mb-0">Headcount</h5>
+            <p class="mt-0 mb-3 text-muted">Lista de empleados</p>
+            <!-- <div class="col-md-6"> -->
           <div class="row align-items-center">
-            <!-- 🔍 BUSCADOR -->
+            
             <div class="col-md-6">
               <input
                 v-model="search"
@@ -16,8 +19,6 @@
                 placeholder="Buscar empleado..."
               />
             </div>
-
-            <!-- ➕ BOTÓN AGREGAR -->
             <div class="col-md-6 text-end">
               <button
                 class="btn btn-primary"
@@ -31,7 +32,6 @@
           </div>
         </div>
 
-        <!-- BODY -->
         <div class="card-body">
           <div v-if="loading" class="text-center py-4">
             Cargando empleados...
@@ -101,8 +101,8 @@
 import { ref, computed, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import MainLayout from "@/layouts/MainLayout.vue";
-import EmpleadoCreateModal from "@/components/EmpleadoCreateModal.vue";
 import api from "@/services/api";
+import EmpleadoCreateModal from "@/components/EmpleadoCreateModal.vue";
 
 const router = useRouter();
 

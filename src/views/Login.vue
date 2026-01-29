@@ -85,6 +85,7 @@ export default {
 
         localStorage.setItem("token", res.data.access_token);
         localStorage.setItem("username", res.data.UserLogin);
+        localStorage.setItem("permisosUsuario",res.data.Permisos);
         localStorage.setItem(
           "forcePasswordChange",
           res.data.forcePasswordChange
